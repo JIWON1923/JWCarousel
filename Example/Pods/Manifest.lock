@@ -1,0 +1,16 @@
+PODS:
+  - JWCarousel (0.1.0)
+
+DEPENDENCIES:
+  - JWCarousel (from `../`)
+
+EXTERNAL SOURCES:
+  JWCarousel:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  JWCarousel: b8be2575c98afa08aaaea3798690c49a1e55aa90
+
+PODFILE CHECKSUM: 7b6d20e4b575c7a7359621e89ceeede2460c5e9d
+
+COCOAPODS: 1.12.0

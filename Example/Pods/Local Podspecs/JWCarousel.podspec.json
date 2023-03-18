@@ -1,0 +1,22 @@
+{
+  "name": "JWCarousel",
+  "version": "0.1.0",
+  "summary": "A short description of JWCarousel.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/zest1923@gmail.com/JWCarousel",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "zest1923@gmail.com": "zest1923@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/zest1923@gmail.com/JWCarousel.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "JWCarousel/Classes/**/*"
+}
