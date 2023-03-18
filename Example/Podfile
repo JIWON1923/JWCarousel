@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'JWCarousel_Example' do
+  pod 'JWCarousel', :path => '../'
+
+  target 'JWCarousel_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
