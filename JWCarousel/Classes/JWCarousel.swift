@@ -10,12 +10,19 @@ import SwiftUI
 public struct JWCarousel<Item, ItemView: View> : View {
     
     @Binding var items: [Item]
-    @Binding var currentIndex: Int
+    @Binding var currentIndex: Int {
+        didSet {
+            if currentIndex == items.count {
+                currentIndex = 0
+            }
+        }
+    }
 
     @State private var pointX: CGFloat = 0
     @State private var size: CGSize = .zero
     @State private var isDragging = false
-
+    @State private var timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    
     @GestureState private var offsetState: CGSize = .zero
 
     var spacing: CGFloat = 0
@@ -24,8 +31,9 @@ public struct JWCarousel<Item, ItemView: View> : View {
     var opacity: Double = 0.0
     var sizeScale: Double = 0.0
     var itemView: (Item) -> ItemView
-
-    public init(items: Binding<[Item]>, currentIndex: Binding<Int>,  spacing: CGFloat, itemWidth: CGFloat, itemHeight: CGFloat, opacity: Double, sizeScale: Double, @ViewBuilder itemView: @escaping (Item) -> ItemView) {
+    var autoScrollTime: TimeInterval = 0
+    
+    public init(items: Binding<[Item]>, currentIndex: Binding<Int>,  spacing: CGFloat, itemWidth: CGFloat, itemHeight: CGFloat, opacity: Double, sizeScale: Double, autoScrollTime: TimeInterval = 0, @ViewBuilder itemView: @escaping (Item) -> ItemView) {
         self._items = items
         self._currentIndex = currentIndex
         self.spacing = spacing
@@ -34,6 +42,7 @@ public struct JWCarousel<Item, ItemView: View> : View {
         self.opacity = opacity
         self.sizeScale = sizeScale
         self.itemView = itemView
+        self.autoScrollTime = autoScrollTime
     }
     
     private var firstItemPositionX: CGFloat {
@@ -49,6 +58,7 @@ public struct JWCarousel<Item, ItemView: View> : View {
                         ZStack {
                             itemView(items[index])
                                 .frame(width: itemWidth, height: itemHeight)
+                                .id(index)
                         }
                         .scaleEffect(max(1.0 - abs(distance(index)) * sizeScale, 0.0001))
                         .zIndex(1.0 - abs(distance(index) * 0.1))
@@ -83,6 +93,7 @@ public struct JWCarousel<Item, ItemView: View> : View {
                             withAnimation {
                                 currentIndex = index
                                 pointX = -(spacing + itemWidth) * CGFloat(currentIndex)
+                                
                             }
                         }
                     }
@@ -91,9 +102,21 @@ public struct JWCarousel<Item, ItemView: View> : View {
                 .task {
                     size = proxy.size
                 }
+                
+                .onReceive(timer) { time in
+                    if autoScrollTime != 0 {
+                        withAnimation {
+                            currentIndex += 1
+                            pointX = -(spacing + itemWidth) * CGFloat(currentIndex)
+                        }
+                    }
+                }
             }
         }
         .onAppear {
+            
+            self.timer = Timer.publish(every: autoScrollTime, on: .main, in: .common).autoconnect()
+            
             withAnimation {
                 pointX = -(CGFloat(currentIndex) * itemWidth + CGFloat(currentIndex) * spacing)
             }
@@ -105,6 +128,11 @@ public struct JWCarousel<Item, ItemView: View> : View {
             }
             .onChanged { value in
                 isDragging = true
+                if autoScrollTime != 0 {
+                    timer.upstream.connect().cancel()
+                    timer = Timer.publish(every: autoScrollTime, on: .main, in: .common).autoconnect()
+                }
+                
             }
             .onEnded { value in
                 isDragging = false

@@ -9,8 +9,9 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-<img src = "https://user-images.githubusercontent.com/68676844/226136078-7935d10a-c0fe-4a5d-b774-fb60fbf64fc7.gif" width = 250>
-
+| basic carousel | Auto scrolling carousel|
+|---|---|
+|<img src = "https://user-images.githubusercontent.com/68676844/226136078-7935d10a-c0fe-4a5d-b774-fb60fbf64fc7.gif" width = 250>|<img src = "https://user-images.githubusercontent.com/68676844/230618347-3c97d5f9-9fce-4396-85ec-82737ba80047.gif" width = 250>|
 
 ## Requirements
 
@@ -25,7 +26,7 @@ pod 'JWCarousel'
 
 ## Author
 
-zest1923@gmail.com, zest1923@gmail.com
+zest1923@gmail.com
 
 ## License
 

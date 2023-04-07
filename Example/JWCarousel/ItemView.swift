@@ -16,8 +16,9 @@ struct ItemView: View {
         ZStack {
             Image("\(item.id)")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .clipShape(Circle())
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .frame(width: 350 , height: 300)
+                .aspectRatio(contentMode: .fit)
                 .shadow(color: Color(.gray), radius: 4, x: 0, y: 4)
         }
 

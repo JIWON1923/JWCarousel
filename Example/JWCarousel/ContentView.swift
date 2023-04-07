@@ -35,7 +35,8 @@ struct ContentView: View {
                    itemWidth: itemWidth,
                    itemHeight: itemHeight,
                    opacity: 0.3,
-                   sizeScale: 0.25) { item in
+                   sizeScale: 0.1,
+                   autoScrollTime: 2) { item in
             ItemView(item: item)
         }
     }
